@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  # Do not set "publish" for Next.js — the Netlify Next.js Runtime handles output.
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
