@@ -143,9 +143,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, id: registration.id });
   } catch (err) {
     console.error("Register route error:", err);
-    return NextResponse.json(
-      { error: "Unexpected error. Please try again." },
-      { status: 500 }
-    );
+    const message =
+      err instanceof Error && /EROFS|read-only|EACCES|Blob/i.test(err.message)
+        ? "Registration storage is unavailable. Please try again shortly or call 07035965544."
+        : "Unexpected error. Please try again.";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -1,33 +1,16 @@
-import { promises as fs } from "fs";
-import path from "path";
 import type { Registration } from "./registration-types";
+import { readJsonArray, writeJsonArray } from "./json-store";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_FILE = path.join(DATA_DIR, "registrations.json");
-
-async function ensureStore() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  try {
-    await fs.access(DATA_FILE);
-  } catch {
-    await fs.writeFile(DATA_FILE, "[]", "utf8");
-  }
-}
+const STORE = "remibello";
+const KEY = "registrations";
+const LOCAL_FILE = "data/registrations.json";
 
 async function readAll(): Promise<Registration[]> {
-  await ensureStore();
-  const raw = await fs.readFile(DATA_FILE, "utf8");
-  try {
-    const parsed = JSON.parse(raw) as Registration[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  return readJsonArray<Registration>(STORE, KEY, LOCAL_FILE);
 }
 
 async function writeAll(rows: Registration[]) {
-  await ensureStore();
-  await fs.writeFile(DATA_FILE, JSON.stringify(rows, null, 2), "utf8");
+  await writeJsonArray(STORE, KEY, LOCAL_FILE, rows);
 }
 
 export type RegistrationInput = {
@@ -82,9 +65,7 @@ export async function createRegistration(
     throw new Error("Please enter a valid phone / WhatsApp number.");
   }
 
-  const phoneTaken = rows.some(
-    (r) => normalizePhone(r.phone) === phoneKey
-  );
+  const phoneTaken = rows.some((r) => normalizePhone(r.phone) === phoneKey);
   if (phoneTaken) {
     throw new DuplicateRegistrationError(
       "phone",

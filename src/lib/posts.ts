@@ -1,33 +1,35 @@
+import { BlogPost, excerptFrom, slugify } from "./types";
+import { readJsonArray, writeJsonArray } from "./json-store";
 import { promises as fs } from "fs";
 import path from "path";
-import { BlogPost, excerptFrom, slugify } from "./types";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_FILE = path.join(DATA_DIR, "posts.json");
+const STORE = "remibello";
+const KEY = "posts";
+const LOCAL_FILE = "data/posts.json";
 
-async function ensureStore() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
+async function seedFromRepoIfEmpty(rows: BlogPost[]): Promise<BlogPost[]> {
+  if (rows.length > 0) return rows;
   try {
-    await fs.access(DATA_FILE);
+    const seedPath = path.join(process.cwd(), LOCAL_FILE);
+    const raw = await fs.readFile(seedPath, "utf8");
+    const seed = JSON.parse(raw) as BlogPost[];
+    if (Array.isArray(seed) && seed.length > 0) {
+      await writeJsonArray(STORE, KEY, LOCAL_FILE, seed);
+      return seed;
+    }
   } catch {
-    await fs.writeFile(DATA_FILE, "[]", "utf8");
+    // no seed available
   }
+  return rows;
 }
 
 async function readAll(): Promise<BlogPost[]> {
-  await ensureStore();
-  const raw = await fs.readFile(DATA_FILE, "utf8");
-  try {
-    const parsed = JSON.parse(raw) as BlogPost[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  const rows = await readJsonArray<BlogPost>(STORE, KEY, LOCAL_FILE);
+  return seedFromRepoIfEmpty(rows);
 }
 
 async function writeAll(posts: BlogPost[]) {
-  await ensureStore();
-  await fs.writeFile(DATA_FILE, JSON.stringify(posts, null, 2), "utf8");
+  await writeJsonArray(STORE, KEY, LOCAL_FILE, posts);
 }
 
 export async function listPosts(options?: {
