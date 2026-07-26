@@ -46,6 +46,6 @@ Set `NEXT_PUBLIC_SITE_URL` to your live domain so social share links and Open Gr
 
 - **When:** August 1–15, 2026 · 10AM–2PM daily  
 - **Where:** Shitta Street, Dopemu Agege, Aluminium Village, Lagos  
-- **Tracks:** Prompt Engineering (AI), Graphic Design, Photo Editing  
+- **Tracks:** Prompt Engineering (AI), Graphic Design, Photo Editing · **Bonus:** Cartoon Video  
 - **Fee:** Free · limited slots  
 - **Enquiries:** 07035965544

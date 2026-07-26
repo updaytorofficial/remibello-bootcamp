@@ -6,6 +6,7 @@ const TRACKS = [
     title: "Prompt Engineer",
     tag: "AI",
     blurb: "Craft prompts that get reliable results from modern AI tools.",
+    bonus: false,
     icon: (
       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden>
         <path
@@ -22,6 +23,7 @@ const TRACKS = [
     title: "Graphic Design",
     tag: "VISUAL",
     blurb: "Build brand-ready layouts, posters, and digital creatives.",
+    bonus: false,
     icon: (
       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden>
         <path
@@ -38,10 +40,28 @@ const TRACKS = [
     title: "Photo Editing",
     tag: "MEDIA",
     blurb: "Retouch, color-grade, and finish images like a pro.",
+    bonus: false,
     icon: (
       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden>
         <path
           d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Cartoon Video",
+    tag: "BONUS",
+    blurb: "Create animated cartoon videos — storytelling, scenes, and motion as a free bonus skill.",
+    bonus: true,
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden>
+        <path
+          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
           stroke="currentColor"
           strokeWidth="1.6"
           strokeLinecap="round"
@@ -160,20 +180,31 @@ export default function HomePage() {
             Learn professional
           </p>
           <h2 className="mt-3 max-w-xl font-display text-5xl tracking-wide text-mist-50 sm:text-6xl">
-            Three tracks. One summer.
+            Three tracks. One bonus.
           </h2>
           <p className="mt-4 max-w-lg text-mist-300">
-            Hands-on sessions built for beginners and curious creators ready to level up.
+            Hands-on sessions built for beginners and curious creators ready to
+            level up — plus Cartoon Video as a free bonus skill.
           </p>
 
-          <ul className="mt-14 grid gap-10 md:grid-cols-3">
+          <ul className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {TRACKS.map((track, i) => (
               <li
                 key={track.title}
-                className="animate-fade-up group border-t border-ember-500/30 pt-6"
+                className={`animate-fade-up group border-t pt-6 ${
+                  track.bonus
+                    ? "border-ember-400/60"
+                    : "border-ember-500/30"
+                }`}
                 style={{ animationDelay: `${0.1 + i * 0.1}s` }}
               >
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-ember-500/40 text-ember-400 transition group-hover:bg-ember-500/10">
+                <div
+                  className={`mb-5 flex h-12 w-12 items-center justify-center rounded-full border text-ember-400 transition group-hover:bg-ember-500/10 ${
+                    track.bonus
+                      ? "border-ember-400 bg-ember-500/10"
+                      : "border-ember-500/40"
+                  }`}
+                >
                   {track.icon}
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ember-500">

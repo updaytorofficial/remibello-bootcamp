@@ -21,7 +21,7 @@ const script = Caveat({
 export const metadata: Metadata = {
   title: "the RemiBello | Step Up 15 Days Bootcamp Summer",
   description:
-    "Free 15-day tech bootcamp by the RemiBello in Agege-Dopemu, Lagos. Learn Prompt Engineering, Graphic Design & Photo Editing. August 1–15, 2026.",
+    "Free 15-day tech bootcamp by the RemiBello in Agege-Dopemu, Lagos. Learn Prompt Engineering, Graphic Design, Photo Editing — plus Cartoon Video as a bonus. August 1–15, 2026.",
   icons: {
     icon: [{ url: "/remibell-logo.png", type: "image/png" }],
     apple: [{ url: "/remibell-logo.png", type: "image/png" }],

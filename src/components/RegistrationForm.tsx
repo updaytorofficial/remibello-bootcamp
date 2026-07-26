@@ -6,6 +6,7 @@ const TRACKS = [
   "Prompt Engineering (AI)",
   "Graphic Design",
   "Photo Editing",
+  "Cartoon Video (Bonus)",
   "All Tracks",
 ] as const;
 
